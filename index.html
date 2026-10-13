@@ -1,141 +1,338 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Josh's personal portfolio website">
     <title>Josh's Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav>
-    <br>
-    <a href="#about">About</a>
-    <a href="#education">Education</a>
-    <a href="#hobbies">Hobbies</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-    <br><br>
-</nav>
+    <!-- Navigation -->
+    <header>
+        <nav aria-label="Main navigation">
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#hobbies">Hobbies</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-    <div class="top-section">
-        <img src="pictures/Car.jpg" alt="Ferrari F1 Car">
-        <br><br>
-        <h1>Hello, I'm Josh!</h1>
-        <h2>First Year BSIT Student</h2>
-        <br>
-    </div>
+    <main>
 
-    <div id="about" class="box">
-        <br>
-        <h2>About Me</h2>
-        <hr>
-        <br>
-        <p>I am a first-year BSIT student with a strong passion for web development, gaming, and building creative projects. I am constantly exploring new concepts, improving my coding skills, and pushing myself to learn new things along the way.</p>
-        <br>
-    </div>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <p class="eyebrow">FIRST-YEAR BSIT STUDENT</p>
+            <h1>Hello, I'm <span>Josh!</span></h1>
+            <p class="hero-description">
+                Welcome to my personal portfolio.
+                Get to know me, my interests, and my journey in IT.
+            </p>
 
-    <div id="education" class="box">
-        <br>
-        <h2>Education</h2>
-        <hr>
-        <br>
-        <p>
-            <span class="left-text"><strong>College (BSIT):</strong></span>
-            <span class="right-text">MLG College of Learning Inc.</span>
-        </p>
-        <p>
-            <span class="left-text"><strong>Previous Study:</strong></span>
-            <span class="right-text">Saint Joseph College</span>
-        </p>
-        <p>
-            <span class="left-text"><strong>SHS (ABM):</strong></span>
-            <span class="right-text">Kasiglahan Village Senior High</span>
-        </p>
-        <p>
-            <span class="left-text"><strong>JHS (7-10):</strong></span>
-            <span class="right-text">San Isidro National High School</span>
-        </p>
-        <p>
-            <span class="left-text"><strong>Elementary:</strong></span>
-            <span class="right-text">San Isidro Labrador Elem.</span>
-        </p>
-        <br>
-    </div>
+            <img
+                src="pictures/Car.jpg"
+                alt="Formula 1 racing car"
+                class="hero-image"
+            >
+        </section>
 
-    <div id="hobbies" class="box">
-        <br>
-        <h2>My Hobbies</h2>
-        <hr>
-        <br>
-        <p>Listening to music (Travis Scott, Keshi, Taylor Swift), developing scripts on Roblox, playing games like Mobile Legends and The Division Resurgence, and exploring new tech.</p>
-        <br>
-    </div>
+        <!-- About Me -->
+        <section class="section" id="about">
+            <div class="section-heading">
+                <p class="eyebrow">GET TO KNOW ME</p>
+                <h2>About Me</h2>
+            </div>
 
-    <div id="skills" class="box">
-        <br>
-        <h2>Skills & What I'm Learning</h2>
-        <hr>
-        <br>
-        <p><strong>Web Basics:</strong> HTML & CSS (Beginner)</p>
-        <p><strong>Programming:</strong> C++ and PHP (Currently learning in school)</p>
-        <p><strong>Game Dev:</strong> Lua & Roblox Scripting (Hobbyist)</p>
-        <br>
-    </div>
+            <div class="about-card">
+                <p>
+                    Hi! I'm Josh, a first-year Bachelor of Science in
+                    Information Technology student. I'm currently learning
+                    more about technology, programming, and website
+                    development.
+                </p>
 
-    <div id="projects" class="box">
-        <br>
-        <h2>My Projects</h2>
-        <hr>
-        <br>
-        <p><strong>JoshRTX:</strong> My interactive personal portfolio website. Still a work in progress.</p>
-        <br>
-    </div>
+                <p>
+                    I enjoy music, gaming, and exploring things that interest
+                    me. I'm still learning, improving my skills, and discovering
+                    what I can create through technology.
+                </p>
 
-    <div id="tools" class="box">
-        <br>
-        <h2>Tools I've Used</h2>
-        <hr>
-        <br>
-        <p><strong>VS Code:</strong> For writing and previewing my code.</p>
-        <p><strong>GitHub:</strong> For version control and hosting my repositories.</p>
-        <p><strong>Firebase & Cloudinary:</strong> For managing backend data and media assets.</p>
-        <br>
-    </div>
+                <p class="highlight-text">Trust the process.</p>
+            </div>
+        </section>
 
-    <div id="contact" class="box">
-        <br>
-        <h2>Contact Me</h2>
-        <hr>
-        <br>
-        <p><strong>Location:</strong> Hilongos, Leyte, Philippines</p>
-        <br>
-        
-        <p>
-            <span class="split"><strong>Email:</strong><br>notartertx@gmail.com</span>
-            <span class="split"><strong>GitHub:</strong><br><a href="https://github.com/notartertx" target="_blank">@notartertx</a></span>
-        </p>
-        <br>
+        <!-- Information Cards -->
+        <section class="section" id="explore">
+            <div class="section-heading">
+                <p class="eyebrow">A LITTLE MORE ABOUT ME</p>
+                <h2>Explore My World</h2>
+                <p class="section-description">
+                    Select a card to learn more.
+                </p>
+            </div>
 
-        <p>
-            <span class="split"><strong>Instagram:</strong><br><a href="https://instagram.com/Joshrtx4" target="_blank">@Joshrtx4</a></span>
-            <span class="split"><strong>Facebook:</strong><br><a href="https://www.facebook.com/share/1Be7nrTaJi/" target="_blank">Josh Notarte</a></span>
-        </p>
-        <br>
+            <div class="card-grid">
 
-        <p>
-            <span class="split"><strong>TikTok:</strong><br><a href="https://tiktok.com/@ralphyy4zx" target="_blank">@ralphyy4zx</a></span>
-            <span class="split"><strong>Spotify:</strong><br><a href="https://open.spotify.com/user/31dl7jgytl7f3556d7upvxpdiiw4?si=yMCtOrN9TZesBRkw2dG5jg&utm_source=copy-link" target="_blank">My Playlist</a></span>
-        </p>
-        <br>
-    </div>
+                <!-- Education Card -->
+                <a href="#modal-education" class="box" id="education">
+                    <span class="card-number">01 / EDUCATION</span>
+                    <h3>My Education</h3>
+                    <p>My academic journey and what I'm studying.</p>
+                    <span class="card-link">Explore more &rarr;</span>
+                </a>
 
-    <div class="footer">
-        <p>Trust the process.</p>
-        <br><br>
-    </div>
+                <!-- Hobbies Card -->
+                <a href="#modal-hobbies" class="box" id="hobbies">
+                    <span class="card-number">02 / INTERESTS</span>
+                    <h3>My Hobbies</h3>
+                    <p>The things I enjoy during my free time.</p>
+                    <span class="card-link">Explore more &rarr;</span>
+                </a>
+
+                <!-- Skills Card -->
+                <a href="#modal-skills" class="box" id="skills">
+                    <span class="card-number">03 / DEVELOPMENT</span>
+                    <h3>My Skills</h3>
+                    <p>The skills I'm learning and improving.</p>
+                    <span class="card-link">Explore more &rarr;</span>
+                </a>
+
+                <!-- Projects Card -->
+                <a href="#modal-projects" class="box" id="projects">
+                    <span class="card-number">04 / MY WORK</span>
+                    <h3>My Projects</h3>
+                    <p>A look at what I've created and what comes next.</p>
+                    <span class="card-link">Explore more &rarr;</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Education Modal -->
+        <span class="modal-anchor" id="modal-education"></span>
+        <section class="modal" role="dialog" aria-labelledby="education-title">
+            <div class="modal-content">
+                <a href="#education" class="close-btn" aria-label="Close education pop-up">&times;</a>
+
+                <div class="modal-inner">
+                    <p class="eyebrow">01 / EDUCATION</p>
+                    <h2 id="education-title">My Education</h2>
+
+                    <div class="detail-item">
+                        <h3>Senior High School</h3>
+                        <p>Completed Senior High School in 2025.</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>College</h3>
+                        <p>
+                            Currently taking Bachelor of Science in
+                            Information Technology (BSIT).
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>My Goal</h3>
+                        <p>
+                            To improve my programming knowledge, learn
+                            practical IT skills, and become more confident
+                            in building websites and other projects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies Modal -->
+        <span class="modal-anchor" id="modal-hobbies"></span>
+        <section class="modal" role="dialog" aria-labelledby="hobbies-title">
+            <div class="modal-content">
+                <a href="#hobbies" class="close-btn" aria-label="Close hobbies pop-up">&times;</a>
+
+                <div class="modal-inner">
+                    <p class="eyebrow">02 / INTERESTS</p>
+                    <h2 id="hobbies-title">My Hobbies</h2>
+
+                    <div class="detail-item">
+                        <h3>Music</h3>
+                        <p>
+                            Music is one of the things I enjoy most.
+                            I like discovering songs and listening to my
+                            favorite artists.
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>Gaming</h3>
+                        <p>
+                            I enjoy playing video games, exploring different
+                            game worlds, and experiencing different gameplay
+                            styles.
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>Technology</h3>
+                        <p>
+                            I enjoy exploring technology, learning about
+                            devices, and discovering new things I can do
+                            with computers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Modal -->
+        <span class="modal-anchor" id="modal-skills"></span>
+        <section class="modal" role="dialog" aria-labelledby="skills-title">
+            <div class="modal-content">
+                <a href="#skills" class="close-btn" aria-label="Close skills pop-up">&times;</a>
+
+                <div class="modal-inner">
+                    <p class="eyebrow">03 / DEVELOPMENT</p>
+                    <h2 id="skills-title">My Skills</h2>
+
+                    <div class="detail-item">
+                        <h3>HTML</h3>
+                        <p>
+                            Learning to structure web pages using elements,
+                            headings, links, images, and sections.
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>CSS</h3>
+                        <p>
+                            Learning to style websites using colors, spacing,
+                            borders, layouts, hover effects, and responsive
+                            design.
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>Problem Solving</h3>
+                        <p>
+                            Practicing how to identify mistakes, understand
+                            errors, and improve my code one step at a time.
+                        </p>
+                    </div>
+
+                    <p class="highlight-text">
+                        Always learning. Always improving.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Modal -->
+        <span class="modal-anchor" id="modal-projects"></span>
+        <section class="modal" role="dialog" aria-labelledby="projects-title">
+            <div class="modal-content">
+                <a href="#projects" class="close-btn" aria-label="Close projects pop-up">&times;</a>
+
+                <div class="modal-inner">
+                    <p class="eyebrow">04 / MY WORK</p>
+                    <h2 id="projects-title">My Projects</h2>
+
+                    <div class="project-item">
+   
+                        <h3>Personal Portfolio Website</h3>
+                        <p>
+                            My personal portfolio website, created using
+                            HTML and CSS for my BSIT school project. It
+                            introduces me, showcases my interests, and
+                            presents information through a dark,
+                            Formula 1-inspired design.
+                        </p>
+
+                        <p>
+                            This website uses CSS hover effects and
+                            <code>:target</code> to open pop-ups without
+                            JavaScript.
+                        </p>
+
+                        <a
+                            href="https://github.com/notartertx"
+                            class="text-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Visit my GitHub &rarr;
+                        </a>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>Future Projects</h3>
+                        <p>
+                            I plan to keep practicing and create more
+                            projects as I gain experience in programming
+                            and web development.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section class="section" id="tools">
+            <div class="section-heading">
+                <p class="eyebrow">MY WORKSPACE</p>
+                <h2>Tools I Use</h2>
+            </div>
+
+            <div class="tools-list">
+                <span class="tool-tag">HTML</span>
+                <span class="tool-tag">CSS</span>
+                <span class="tool-tag">Visual Studio Code</span>
+                <span class="tool-tag">GitHub</span>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section" id="contact">
+            <div class="section-heading">
+                <p class="eyebrow">LET'S CONNECT</p>
+                <h2>Contact Me</h2>
+                <p class="section-description">
+                    Want to see more of my work? Find me here.
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-row">
+                    <span class="contact-label">GitHub</span>
+                    <a
+                        href="https://github.com/notartertx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        notartertx &rarr;
+                    </a>
+                </div>
+
+                <div class="contact-row">
+                    <span class="contact-label">Email</span>
+                    <a href="mailto:notartertx@gmail.com">
+                        Send me an email &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Designed and built by Josh.</p>
+        <p class="footer-motto">TRUST THE PROCESS.</p>
+        <a href="#home" class="back-to-top">Back to top &uarr;</a>
+    </footer>
 
 </body>
 </html>
