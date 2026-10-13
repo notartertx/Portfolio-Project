@@ -770,3 +770,20 @@ footer p {
         transition-duration: 0.01ms !important;
     }
 }
+
+
+/* Remove the blue tap highlight on mobile */
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove the default outline when tapping */
+a:focus {
+    outline: none;
+}
+
+/* Keep keyboard navigation accessible */
+a:focus-visible {
+    outline: 2px solid #e10600;
+    outline-offset: 4px;
+}
