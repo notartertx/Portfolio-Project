@@ -1,338 +1,160 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Josh's personal portfolio website">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>PHP Calculator</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            width: 300px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            color: #66758a;
+            font-size: 23px;
+            font-weight: normal;
+        }
+
+        #display {
+            width: 100%;
+            height: 60px;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            padding: 10px;
+            text-align: right;
+            font-size: 25px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            background: #f0f0f0;
+            color: #555;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .operator {
+            background: #b8d7fa;
+        }
+
+        .equal {
+            background: #5ce6a2;
+        }
+
+        .clear {
+            width: 100%;
+            height: 50px;
+            margin-top: 8px;
+            background: #f5c5c5;
+            color: #b66a6a;
+        }
+    </style>
+</head>
 <body>
 
-    <!-- Navigation -->
-    <header>
-        <nav aria-label="Main navigation">
-            <a href="#about">About</a>
-            <a href="#education">Education</a>
-            <a href="#hobbies">Hobbies</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+<div class="calculator">
+    <h2>PHP Calculator</h2>
 
-    <main>
+    <input type="text" id="display" value="0" readonly>
 
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <p class="eyebrow">FIRST-YEAR BSIT STUDENT</p>
-            <h1>Hello, I'm <span>Josh!</span></h1>
-            <p class="hero-description">
-                Welcome to my personal portfolio.
-                Get to know me, my interests, and my journey in IT.
-            </p>
+    <div class="buttons">
+        <button onclick="press('7')">7</button>
+        <button onclick="press('8')">8</button>
+        <button onclick="press('9')">9</button>
+        <button class="operator" onclick="press('/')">÷</button>
 
-            <img
-                src="pictures/Car.jpg"
-                alt="Formula 1 racing car"
-                class="hero-image"
-            >
-        </section>
+        <button onclick="press('4')">4</button>
+        <button onclick="press('5')">5</button>
+        <button onclick="press('6')">6</button>
+        <button class="operator" onclick="press('*')">×</button>
 
-        <!-- About Me -->
-        <section class="section" id="about">
-            <div class="section-heading">
-                <p class="eyebrow">GET TO KNOW ME</p>
-                <h2>About Me</h2>
-            </div>
+        <button onclick="press('1')">1</button>
+        <button onclick="press('2')">2</button>
+        <button onclick="press('3')">3</button>
+        <button class="operator" onclick="press('-')">−</button>
 
-            <div class="about-card">
-                <p>
-                    Hi! I'm Josh, a first-year Bachelor of Science in
-                    Information Technology student. I'm currently learning
-                    more about technology, programming, and website
-                    development.
-                </p>
+        <button onclick="press('0')">0</button>
+        <button onclick="press('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+        <button class="operator" onclick="press('+')">+</button>
+    </div>
 
-                <p>
-                    I enjoy music, gaming, and exploring things that interest
-                    me. I'm still learning, improving my skills, and discovering
-                    what I can create through technology.
-                </p>
+    <button class="clear" onclick="clearDisplay()">CLEAR</button>
+</div>
 
-                <p class="highlight-text">Trust the process.</p>
-            </div>
-        </section>
+<script>
+    let expression = "";
+    const display = document.getElementById("display");
 
-        <!-- Information Cards -->
-        <section class="section" id="explore">
-            <div class="section-heading">
-                <p class="eyebrow">A LITTLE MORE ABOUT ME</p>
-                <h2>Explore My World</h2>
-                <p class="section-description">
-                    Select a card to learn more.
-                </p>
-            </div>
+    function press(value) {
+        if (display.value === "Error") {
+            expression = "";
+        }
 
-            <div class="card-grid">
+        expression += value;
+        display.value = expression;
+    }
 
-                <!-- Education Card -->
-                <a href="#modal-education" class="box" id="education">
-                    <span class="card-number">01 / EDUCATION</span>
-                    <h3>My Education</h3>
-                    <p>My academic journey and what I'm studying.</p>
-                    <span class="card-link">Explore more &rarr;</span>
-                </a>
+    function calculate() {
+        try {
+            if (!expression.trim()) return;
 
-                <!-- Hobbies Card -->
-                <a href="#modal-hobbies" class="box" id="hobbies">
-                    <span class="card-number">02 / INTERESTS</span>
-                    <h3>My Hobbies</h3>
-                    <p>The things I enjoy during my free time.</p>
-                    <span class="card-link">Explore more &rarr;</span>
-                </a>
+            // Allow only numbers and calculator operators.
+            if (!/^[0-9+\-*/.() ]+$/.test(expression)) {
+                throw new Error("Invalid input");
+            }
 
-                <!-- Skills Card -->
-                <a href="#modal-skills" class="box" id="skills">
-                    <span class="card-number">03 / DEVELOPMENT</span>
-                    <h3>My Skills</h3>
-                    <p>The skills I'm learning and improving.</p>
-                    <span class="card-link">Explore more &rarr;</span>
-                </a>
+            const result = Function(
+                '"use strict"; return (' + expression + ')'
+            )();
 
-                <!-- Projects Card -->
-                <a href="#modal-projects" class="box" id="projects">
-                    <span class="card-number">04 / MY WORK</span>
-                    <h3>My Projects</h3>
-                    <p>A look at what I've created and what comes next.</p>
-                    <span class="card-link">Explore more &rarr;</span>
-                </a>
+            if (!Number.isFinite(result)) {
+                throw new Error("Invalid calculation");
+            }
 
-            </div>
-        </section>
+            display.value = result;
+            expression = String(result);
+        } catch (error) {
+            display.value = "Error";
+            expression = "";
+        }
+    }
 
-        <!-- Education Modal -->
-        <span class="modal-anchor" id="modal-education"></span>
-        <section class="modal" role="dialog" aria-labelledby="education-title">
-            <div class="modal-content">
-                <a href="#education" class="close-btn" aria-label="Close education pop-up">&times;</a>
-
-                <div class="modal-inner">
-                    <p class="eyebrow">01 / EDUCATION</p>
-                    <h2 id="education-title">My Education</h2>
-
-                    <div class="detail-item">
-                        <h3>Senior High School</h3>
-                        <p>Completed Senior High School in 2025.</p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>College</h3>
-                        <p>
-                            Currently taking Bachelor of Science in
-                            Information Technology (BSIT).
-                        </p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>My Goal</h3>
-                        <p>
-                            To improve my programming knowledge, learn
-                            practical IT skills, and become more confident
-                            in building websites and other projects.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Hobbies Modal -->
-        <span class="modal-anchor" id="modal-hobbies"></span>
-        <section class="modal" role="dialog" aria-labelledby="hobbies-title">
-            <div class="modal-content">
-                <a href="#hobbies" class="close-btn" aria-label="Close hobbies pop-up">&times;</a>
-
-                <div class="modal-inner">
-                    <p class="eyebrow">02 / INTERESTS</p>
-                    <h2 id="hobbies-title">My Hobbies</h2>
-
-                    <div class="detail-item">
-                        <h3>Music</h3>
-                        <p>
-                            Music is one of the things I enjoy most.
-                            I like discovering songs and listening to my
-                            favorite artists.
-                        </p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>Gaming</h3>
-                        <p>
-                            I enjoy playing video games, exploring different
-                            game worlds, and experiencing different gameplay
-                            styles.
-                        </p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>Technology</h3>
-                        <p>
-                            I enjoy exploring technology, learning about
-                            devices, and discovering new things I can do
-                            with computers.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Modal -->
-        <span class="modal-anchor" id="modal-skills"></span>
-        <section class="modal" role="dialog" aria-labelledby="skills-title">
-            <div class="modal-content">
-                <a href="#skills" class="close-btn" aria-label="Close skills pop-up">&times;</a>
-
-                <div class="modal-inner">
-                    <p class="eyebrow">03 / DEVELOPMENT</p>
-                    <h2 id="skills-title">My Skills</h2>
-
-                    <div class="detail-item">
-                        <h3>HTML</h3>
-                        <p>
-                            Learning to structure web pages using elements,
-                            headings, links, images, and sections.
-                        </p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>CSS</h3>
-                        <p>
-                            Learning to style websites using colors, spacing,
-                            borders, layouts, hover effects, and responsive
-                            design.
-                        </p>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>Problem Solving</h3>
-                        <p>
-                            Practicing how to identify mistakes, understand
-                            errors, and improve my code one step at a time.
-                        </p>
-                    </div>
-
-                    <p class="highlight-text">
-                        Always learning. Always improving.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Modal -->
-        <span class="modal-anchor" id="modal-projects"></span>
-        <section class="modal" role="dialog" aria-labelledby="projects-title">
-            <div class="modal-content">
-                <a href="#projects" class="close-btn" aria-label="Close projects pop-up">&times;</a>
-
-                <div class="modal-inner">
-                    <p class="eyebrow">04 / MY WORK</p>
-                    <h2 id="projects-title">My Projects</h2>
-
-                    <div class="project-item">
-   
-                        <h3>Personal Portfolio Website</h3>
-                        <p>
-                            My personal portfolio website, created using
-                            HTML and CSS for my BSIT school project. It
-                            introduces me, showcases my interests, and
-                            presents information through a dark,
-                            Formula 1-inspired design.
-                        </p>
-
-                        <p>
-                            This website uses CSS hover effects and
-                            <code>:target</code> to open pop-ups without
-                            JavaScript.
-                        </p>
-
-                        <a
-                            href="https://github.com/notartertx"
-                            class="text-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Visit my GitHub &rarr;
-                        </a>
-                    </div>
-
-                    <div class="detail-item">
-                        <h3>Future Projects</h3>
-                        <p>
-                            I plan to keep practicing and create more
-                            projects as I gain experience in programming
-                            and web development.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tools -->
-        <section class="section" id="tools">
-            <div class="section-heading">
-                <p class="eyebrow">MY WORKSPACE</p>
-                <h2>Tools I Use</h2>
-            </div>
-
-            <div class="tools-list">
-                <span class="tool-tag">HTML</span>
-                <span class="tool-tag">CSS</span>
-                <span class="tool-tag">Visual Studio Code</span>
-                <span class="tool-tag">GitHub</span>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="section" id="contact">
-            <div class="section-heading">
-                <p class="eyebrow">LET'S CONNECT</p>
-                <h2>Contact Me</h2>
-                <p class="section-description">
-                    Want to see more of my work? Find me here.
-                </p>
-            </div>
-
-            <div class="contact-card">
-                <div class="contact-row">
-                    <span class="contact-label">GitHub</span>
-                    <a
-                        href="https://github.com/notartertx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        notartertx &rarr;
-                    </a>
-                </div>
-
-                <div class="contact-row">
-                    <span class="contact-label">Email</span>
-                    <a href="mailto:notartertx@gmail.com">
-                        Send me an email &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>Designed and built by Josh.</p>
-        <p class="footer-motto">TRUST THE PROCESS.</p>
-        <a href="#home" class="back-to-top">Back to top &uarr;</a>
-    </footer>
+    function clearDisplay() {
+        expression = "";
+        display.value = "0";
+    }
+</script>
 
 </body>
 </html>
