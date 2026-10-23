@@ -107,14 +107,14 @@ if (isset($_POST['btn'])) {
                 if ($num2 != 0) {
                     $display = $num1 / $num2;
                 } else {
-                    $display = "Error";
+                    $display = "Err";
                 }
             }
         } else {
-            $display = "Error";
+            $display = "Err";
         }
     } else {
-        if ($display == "0" || $display == "Error") {
+        if ($display == "0" || $display == "Err") {
             $display = $btn;
         } else {
             $display .= $btn;
