@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
+            background-color: #101114;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,16 +20,15 @@
         .calculator {
             width: 300px;
             padding: 20px;
-            background: white;
+            background: #1b1c21;
+            border: 1px solid #e10600;
             border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 0 20px #330000;
         }
 
         h2 {
             text-align: center;
-            color: #66758a;
-            font-size: 23px;
-            font-weight: normal;
+            color: white;
         }
 
         #display {
@@ -39,7 +39,9 @@
             padding: 10px;
             text-align: right;
             font-size: 25px;
-            border: 1px solid #ddd;
+            background: #101114;
+            color: white;
+            border: 1px solid #e10600;
             border-radius: 5px;
         }
 
@@ -53,108 +55,110 @@
             height: 50px;
             border: none;
             border-radius: 5px;
-            background: #f0f0f0;
-            color: #555;
+            background: #292b32;
+            color: white;
             font-size: 18px;
             cursor: pointer;
         }
 
-        button:hover {
-            opacity: 0.8;
-        }
-
         .operator {
-            background: #b8d7fa;
+            background: #721014;
         }
 
         .equal {
-            background: #5ce6a2;
+            background: #e10600;
         }
 
         .clear {
             width: 100%;
             height: 50px;
             margin-top: 8px;
-            background: #f5c5c5;
-            color: #b66a6a;
+            background: #a71920;
         }
     </style>
 </head>
 <body>
 
+<?php
+$display = "0";
+
+if (isset($_POST['display'])) {
+    $display = $_POST['display'];
+}
+
+if (isset($_POST['btn'])) {
+    $btn = $_POST['btn'];
+
+    if ($btn == "CLEAR") {
+        $display = "0";
+    } elseif ($btn == "=") {
+        if (preg_match('/^(-?\d+\.?\d*|\.\d+)\s*([+\-*\/])\s*(-?\d+\.?\d*|\.\d+)$/', $display, $matches)) {
+            $num1 = (float)$matches[1];
+            $operator = $matches[2];
+            $num2 = (float)$matches[3];
+
+            if ($operator == "+") {
+                $display = $num1 + $num2;
+            } elseif ($operator == "-") {
+                $display = $num1 - $num2;
+            } elseif ($operator == "*") {
+                $display = $num1 * $num2;
+            } elseif ($operator == "/") {
+                if ($num2 != 0) {
+                    $display = $num1 / $num2;
+                } else {
+                    $display = "Error";
+                }
+            }
+        } else {
+            $display = "Error";
+        }
+    } else {
+        if ($display == "0" || $display == "Error") {
+            $display = $btn;
+        } else {
+            $display .= $btn;
+        }
+    }
+}
+?>
+
 <div class="calculator">
     <h2>PHP Calculator</h2>
 
-    <input type="text" id="display" value="0" readonly>
+    <form method="post">
+        <input type="hidden" name="display"
+               value="<?php echo htmlspecialchars((string)$display); ?>">
 
-    <div class="buttons">
-        <button onclick="press('7')">7</button>
-        <button onclick="press('8')">8</button>
-        <button onclick="press('9')">9</button>
-        <button class="operator" onclick="press('/')">÷</button>
+        <input type="text" id="display"
+               value="<?php echo htmlspecialchars((string)$display); ?>"
+               readonly>
 
-        <button onclick="press('4')">4</button>
-        <button onclick="press('5')">5</button>
-        <button onclick="press('6')">6</button>
-        <button class="operator" onclick="press('*')">×</button>
+        <div class="buttons">
+            <button name="btn" value="7">7</button>
+            <button name="btn" value="8">8</button>
+            <button name="btn" value="9">9</button>
+            <button name="btn" value="/" class="operator">÷</button>
 
-        <button onclick="press('1')">1</button>
-        <button onclick="press('2')">2</button>
-        <button onclick="press('3')">3</button>
-        <button class="operator" onclick="press('-')">−</button>
+            <button name="btn" value="4">4</button>
+            <button name="btn" value="5">5</button>
+            <button name="btn" value="6">6</button>
+            <button name="btn" value="*" class="operator">×</button>
 
-        <button onclick="press('0')">0</button>
-        <button onclick="press('.')">.</button>
-        <button class="equal" onclick="calculate()">=</button>
-        <button class="operator" onclick="press('+')">+</button>
-    </div>
+            <button name="btn" value="1">1</button>
+            <button name="btn" value="2">2</button>
+            <button name="btn" value="3">3</button>
+            <button name="btn" value="-" class="operator">−</button>
 
-    <button class="clear" onclick="clearDisplay()">CLEAR</button>
+            <button name="btn" value="0">0</button>
+            <button name="btn" value=".">.</button>
+            <button name="btn" value="=" class="equal">=</button>
+            <button name="btn" value="+" class="operator">+</button>
+        </div>
+
+        <button name="btn" value="CLEAR" class="clear">CLEAR</button>
+    </form>
 </div>
-
-<script>
-    let expression = "";
-    const display = document.getElementById("display");
-
-    function press(value) {
-        if (display.value === "Error") {
-            expression = "";
-        }
-
-        expression += value;
-        display.value = expression;
-    }
-
-    function calculate() {
-        try {
-            if (!expression.trim()) return;
-
-            // Allow only numbers and calculator operators.
-            if (!/^[0-9+\-*/.() ]+$/.test(expression)) {
-                throw new Error("Invalid input");
-            }
-
-            const result = Function(
-                '"use strict"; return (' + expression + ')'
-            )();
-
-            if (!Number.isFinite(result)) {
-                throw new Error("Invalid calculation");
-            }
-
-            display.value = result;
-            expression = String(result);
-        } catch (error) {
-            display.value = "Error";
-            expression = "";
-        }
-    }
-
-    function clearDisplay() {
-        expression = "";
-        display.value = "0";
-    }
-</script>
 
 </body>
 </html>
