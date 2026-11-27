@@ -1,5 +1,5 @@
 import {
-  STORAGE_KEY, QUESTS, getManilaDate, getManilaDay, getQuestForDate,
+  STORAGE_KEY, getManilaDate, getManilaDay, getQuestForDate,
   getLevel, createProgress, validateProgress, completeQuest, getCurrentStreak
 } from "./progression.mjs";
 
@@ -139,6 +139,7 @@ document.querySelectorAll("[data-view]").forEach((button) => {
 });
 
 $("#complete-quest").addEventListener("click", () => {
+  const previous = progress;
   const result = completeQuest(progress, getManilaDate(), getQuestForDate());
   if (!result.completed) {
     renderQuest();
@@ -149,6 +150,9 @@ $("#complete-quest").addEventListener("click", () => {
   if (persist()) {
     renderAll();
     showToast(`Quest cleared. +${getQuestForDate().reward} EXP`);
+  } else {
+    progress = previous;
+    renderAll();
   }
 });
 

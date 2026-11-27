@@ -106,8 +106,10 @@ export function validateProgress(value) {
       value.totalExp < 0 || !Array.isArray(value.history)) return false;
   const dates = new Set();
   for (const entry of value.history) {
+    const date = typeof entry?.date === "string" ? new Date(`${entry.date}T00:00:00Z`) : null;
     if (!entry || typeof entry.date !== "string" ||
         !/^\d{4}-\d{2}-\d{2}$/.test(entry.date) || dates.has(entry.date) ||
+        Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== entry.date ||
         typeof entry.title !== "string" || !Number.isSafeInteger(entry.reward) ||
         entry.reward < 0 || !QUESTS.some((quest) => quest.title === entry.title && quest.reward === entry.reward)) {
       return false;
