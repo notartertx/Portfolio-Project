@@ -1,164 +1,122 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Calculator</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #101114;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .calculator {
-            width: 300px;
-            padding: 20px;
-            background: #1b1c21;
-            border: 1px solid #e10600;
-            border-radius: 12px;
-            box-shadow: 0 0 20px #330000;
-        }
-
-        h2 {
-            text-align: center;
-            color: white;
-        }
-
-        #display {
-            width: 100%;
-            height: 60px;
-            box-sizing: border-box;
-            margin-bottom: 12px;
-            padding: 10px;
-            text-align: right;
-            font-size: 25px;
-            background: #101114;
-            color: white;
-            border: 1px solid #e10600;
-            border-radius: 5px;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        button {
-            height: 50px;
-            border: none;
-            border-radius: 5px;
-            background: #292b32;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .operator {
-            background: #721014;
-        }
-
-        .equal {
-            background: #e10600;
-        }
-
-        .clear {
-            width: 100%;
-            height: 50px;
-            margin-top: 8px;
-            background: #a71920;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d0b">
+  <meta name="description" content="A personal fitness progression system. One quest at a time.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <title>DAILY QUEST — System Status</title>
 </head>
 <body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="wordmark" href="#status" aria-label="Daily Quest home">
+        <span class="brand-mark" aria-hidden="true">D<span>Q</span></span>
+        <span>DAILY <b>QUEST</b></span>
+      </a>
+      <div class="system-state"><i></i><span>SYSTEM ONLINE</span></div>
+    </header>
 
-<?php
-$display = "0";
-
-if (isset($_POST['display'])) {
-    $display = $_POST['display'];
-}
-
-if (isset($_POST['btn'])) {
-    $btn = $_POST['btn'];
-
-    if ($btn == "CLEAR") {
-        $display = "0";
-    } elseif ($btn == "=") {
-        if (preg_match('/^(-?\d+\.?\d*|\.\d+)\s*([+\-*\/])\s*(-?\d+\.?\d*|\.\d+)$/', $display, $matches)) {
-            $num1 = (float)$matches[1];
-            $operator = $matches[2];
-            $num2 = (float)$matches[3];
-
-            if ($operator == "+") {
-                $display = $num1 + $num2;
-            } elseif ($operator == "-") {
-                $display = $num1 - $num2;
-            } elseif ($operator == "*") {
-                $display = $num1 * $num2;
-            } elseif ($operator == "/") {
-                if ($num2 != 0) {
-                    $display = $num1 / $num2;
-                } else {
-                    $display = "Err";
-                }
-            }
-        } else {
-            $display = "Err";
-        }
-    } else {
-        if ($display == "0" || $display == "Err") {
-            $display = $btn;
-        } else {
-            $display .= $btn;
-        }
-    }
-}
-?>
-
-<div class="calculator">
-    <h2>PHP Calculator</h2>
-
-    <form method="post">
-        <input type="hidden" name="display"
-               value="<?php echo htmlspecialchars((string)$display); ?>">
-
-        <input type="text" id="display"
-               value="<?php echo htmlspecialchars((string)$display); ?>"
-               readonly>
-
-        <div class="buttons">
-            <button name="btn" value="7">7</button>
-            <button name="btn" value="8">8</button>
-            <button name="btn" value="9">9</button>
-            <button name="btn" value="/" class="operator">÷</button>
-
-            <button name="btn" value="4">4</button>
-            <button name="btn" value="5">5</button>
-            <button name="btn" value="6">6</button>
-            <button name="btn" value="*" class="operator">×</button>
-
-            <button name="btn" value="1">1</button>
-            <button name="btn" value="2">2</button>
-            <button name="btn" value="3">3</button>
-            <button name="btn" value="-" class="operator">−</button>
-
-            <button name="btn" value="0">0</button>
-            <button name="btn" value=".">.</button>
-            <button name="btn" value="=" class="equal">=</button>
-            <button name="btn" value="+" class="operator">+</button>
+    <main id="main-content">
+      <section id="status-view" class="view active" aria-labelledby="status-title">
+        <div class="eyebrow"><span class="eyebrow-line"></span> PLAYER STATUS <span id="today-label"></span></div>
+        <div class="player-heading">
+          <div>
+            <p class="kicker">PERSONAL FITNESS SYSTEM</p>
+            <h1 id="status-title">Welcome back,<br><span>Player.</span></h1>
+          </div>
+          <div class="level-seal" aria-label="Current level">
+            <span>LVL</span>
+            <strong id="level-number">01</strong>
+          </div>
         </div>
 
-        <button name="btn" value="CLEAR" class="clear">CLEAR</button>
-    </form>
-</div>
+        <section class="progress-panel" aria-label="Experience progression">
+          <div class="progress-labels">
+            <div><span class="micro-label">EXPERIENCE</span><strong><span id="total-exp">0</span> <small>EXP</small></strong></div>
+            <div class="next-level"><span class="micro-label">NEXT LEVEL</span><strong><span id="exp-current">0</span><small> / </small><span id="exp-required">100</span> EXP</strong></div>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Experience to next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="exp-fill"></span>
+          </div>
+          <div class="progress-foot"><span>LEVEL <span id="current-level-small">1</span></span><span><span id="exp-remaining">100</span> EXP TO GO</span></div>
+        </section>
 
+        <div class="section-heading">
+          <div><p class="kicker">YOUR RECORD</p><h2>Player statistics</h2></div>
+          <span class="section-index">01 / 03</span>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-cell"><span class="stat-icon">↗</span><strong id="quests-count">0</strong><span>QUESTS CLEARED</span></article>
+          <article class="stat-cell"><span class="stat-icon">◷</span><strong id="streak-count">0 <small>DAYS</small></strong><span>CURRENT STREAK</span></article>
+        </div>
+
+        <div class="section-heading activity-heading">
+          <div><p class="kicker">FIELD LOG</p><h2>Recent activity</h2></div>
+          <button class="text-button" type="button" data-view="history">VIEW ALL <span>↗</span></button>
+        </div>
+        <div id="recent-activity" class="activity-list"></div>
+        <p class="safety-note"><span>✳</span> Progress at your pace. Rest when you need it.</p>
+      </section>
+
+      <section id="quest-view" class="view" aria-labelledby="quest-title" hidden>
+        <div class="eyebrow"><span class="eyebrow-line"></span> DAILY PROTOCOL <span id="quest-date"></span></div>
+        <div class="quest-intro">
+          <p class="kicker">ONE DAY. ONE STEP.</p>
+          <h1 id="quest-title">Today's<br><span>quest.</span></h1>
+          <p class="intro-copy">A steady practice beats a perfect workout. Move gently, and make it your own.</p>
+        </div>
+        <article class="quest-sheet">
+          <div class="quest-sheet-top"><span id="day-tag" class="day-tag"></span><span class="reward">+<b id="quest-reward">25</b> EXP</span></div>
+          <h2 id="quest-name"></h2>
+          <p id="quest-description" class="quest-description"></p>
+          <div class="exercise-heading"><span>EXERCISE PLAN</span><span id="plan-count"></span></div>
+          <ol id="exercise-list" class="exercise-list"></ol>
+          <div class="rest-guidance"><span>REST GUIDANCE</span><p id="rest-guidance"></p></div>
+          <p class="safety-copy">Stop if you feel pain, dizziness, or unwell. Skip or adapt any movement that doesn't feel right. No workout is worth an injury.</p>
+          <button id="complete-quest" class="primary-button" type="button"><span>MARK QUEST COMPLETE</span><span>→</span></button>
+          <p id="quest-status" class="quest-status" aria-live="polite"></p>
+        </article>
+        <p class="quest-footnote">Consistency is built one comfortable session at a time.</p>
+      </section>
+
+      <section id="history-view" class="view" aria-labelledby="history-title" hidden>
+        <div class="eyebrow"><span class="eyebrow-line"></span> PLAYER RECORD</div>
+        <div class="page-heading"><p class="kicker">EVERY STEP COUNTS</p><h1 id="history-title">Quest<br><span>history.</span></h1></div>
+        <div id="history-list" class="history-list"></div>
+      </section>
+
+      <section id="settings-view" class="view" aria-labelledby="settings-title" hidden>
+        <div class="eyebrow"><span class="eyebrow-line"></span> SYSTEM CONFIGURATION</div>
+        <div class="page-heading"><p class="kicker">YOUR DATA, YOURS</p><h1 id="settings-title">Settings<span>.</span></h1></div>
+        <div class="settings-group">
+          <div class="settings-copy"><strong>Export progress</strong><p>Download a backup of your quests and experience as JSON.</p></div>
+          <button id="export-data" class="outline-button" type="button">EXPORT JSON <span>↓</span></button>
+        </div>
+        <div class="settings-group">
+          <div class="settings-copy"><strong>Import progress</strong><p>Restore a previously exported Daily Quest backup.</p></div>
+          <label class="outline-button file-button">IMPORT JSON <span>↑</span><input id="import-data" type="file" accept="application/json,.json"></label>
+        </div>
+        <div class="settings-group danger-group">
+          <div class="settings-copy"><strong>Reset player data</strong><p>Delete your level, EXP, and quest history from this device.</p></div>
+          <button id="reset-data" class="danger-button" type="button">RESET DATA</button>
+        </div>
+        <div class="settings-note"><span class="micro-label">LOCAL-FIRST SYSTEM</span><p>Your progress stays in this browser. It isn't sent to a server. The daily quest follows Asia/Manila time.</p></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" type="button" data-view="status" aria-current="page"><span class="nav-glyph">◈</span><span>STATUS</span></button>
+      <button class="nav-item" type="button" data-view="quest"><span class="nav-glyph">＋</span><span>QUEST</span></button>
+      <button class="nav-item" type="button" data-view="history"><span class="nav-glyph">≡</span><span>HISTORY</span></button>
+      <button class="nav-item" type="button" data-view="settings"><span class="nav-glyph">⌘</span><span>SETTINGS</span></button>
+    </nav>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
