@@ -32,12 +32,6 @@ function formatDate(dateString, options = { month: "short", day: "numeric", year
     .format(new Date(Date.UTC(year, month - 1, day, 12)));
 }
 
-function escapeText(value) {
-  const element = document.createElement("span");
-  element.textContent = value;
-  return element.innerHTML;
-}
-
 function renderStatus() {
   const level = getLevel(progress.totalExp);
   $("#level-number").textContent = String(level.level).padStart(2, "0");
@@ -49,23 +43,43 @@ function renderStatus() {
   $("#exp-fill").style.width = `${(level.currentExp / level.requiredExp) * 100}%`;
   $(".progress-track").setAttribute("aria-valuenow", Math.round((level.currentExp / level.requiredExp) * 100));
   $("#quests-count").textContent = progress.history.length;
-  $("#streak-count").innerHTML = `${getCurrentStreak(progress.history)} <small>DAYS</small>`;
+  const streakCount = $("#streak-count");
+  const daysLabel = document.createElement("small");
+  daysLabel.textContent = "DAYS";
+  streakCount.replaceChildren(document.createTextNode(`${getCurrentStreak(progress.history)} `), daysLabel);
   const now = new Date();
   $("#today-label").textContent = formatDate(getManilaDate(now), { month: "short", day: "2-digit" }).toUpperCase();
   renderActivity($("#recent-activity"), progress.history.slice(0, 3));
 }
 
 function renderActivity(container, entries) {
+  container.replaceChildren();
   if (!entries.length) {
-    container.innerHTML = '<p class="empty-state">No quests cleared yet. Your record starts when you complete your first quest.</p>';
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "No quests cleared yet. Your record starts when you complete your first quest.";
+    container.append(empty);
     return;
   }
-  container.innerHTML = entries.map((entry) => `
-    <div class="activity-row">
-      <span class="activity-marker" aria-hidden="true"></span>
-      <div class="activity-detail"><strong>${escapeText(entry.title)}</strong><span>${formatDate(entry.date).toUpperCase()}</span></div>
-      <span class="activity-reward">+${entry.reward} EXP</span>
-    </div>`).join("");
+  for (const entry of entries) {
+    const row = document.createElement("div");
+    row.className = "activity-row";
+    const marker = document.createElement("span");
+    marker.className = "activity-marker";
+    marker.setAttribute("aria-hidden", "true");
+    const detail = document.createElement("div");
+    detail.className = "activity-detail";
+    const title = document.createElement("strong");
+    title.textContent = entry.title;
+    const date = document.createElement("span");
+    date.textContent = formatDate(entry.date).toUpperCase();
+    detail.append(title, date);
+    const reward = document.createElement("span");
+    reward.className = "activity-reward";
+    reward.textContent = `+${entry.reward} EXP`;
+    row.append(marker, detail, reward);
+    container.append(row);
+  }
 }
 
 function renderQuest() {
@@ -79,8 +93,17 @@ function renderQuest() {
   $("#quest-description").textContent = quest.description;
   $("#rest-guidance").textContent = quest.rest;
   $("#plan-count").textContent = `${String(quest.exercises.length).padStart(2, "0")} ITEMS`;
-  $("#exercise-list").innerHTML = quest.exercises.map((exercise) => `
-    <li><strong>${escapeText(exercise.name)}</strong><span>${escapeText(exercise.detail)}</span></li>`).join("");
+  const exerciseList = $("#exercise-list");
+  exerciseList.replaceChildren();
+  for (const exercise of quest.exercises) {
+    const item = document.createElement("li");
+    const name = document.createElement("strong");
+    name.textContent = exercise.name;
+    const detail = document.createElement("span");
+    detail.textContent = exercise.detail;
+    item.append(name, detail);
+    exerciseList.append(item);
+  }
   const completed = progress.history.some((entry) => entry.date === date);
   const button = $("#complete-quest");
   button.disabled = completed;
@@ -90,18 +113,37 @@ function renderQuest() {
 
 function renderHistory() {
   const container = $("#history-list");
+  container.replaceChildren();
   if (!progress.history.length) {
-    container.innerHTML = '<p class="empty-state">Your cleared quests will appear here. There are no previous workouts in this record.</p>';
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "Your cleared quests will appear here. There are no previous workouts in this record.";
+    container.append(empty);
     return;
   }
-  container.innerHTML = progress.history.map((entry) => {
+  for (const entry of progress.history) {
     const date = formatDate(entry.date, { month: "short", day: "numeric" }).split(" ");
-    return `<article class="history-row">
-      <div class="history-date">${date[1]}<span>${date[0].toUpperCase()}</span></div>
-      <div class="history-detail"><strong>${escapeText(entry.title)}</strong><span>QUEST CLEARED</span></div>
-      <span class="activity-reward">+${entry.reward} EXP</span>
-    </article>`;
-  }).join("");
+    const row = document.createElement("article");
+    row.className = "history-row";
+    const day = document.createElement("div");
+    day.className = "history-date";
+    day.append(document.createTextNode(date[1]));
+    const month = document.createElement("span");
+    month.textContent = date[0].toUpperCase();
+    day.append(month);
+    const detail = document.createElement("div");
+    detail.className = "history-detail";
+    const title = document.createElement("strong");
+    title.textContent = entry.title;
+    const status = document.createElement("span");
+    status.textContent = "QUEST CLEARED";
+    detail.append(title, status);
+    const reward = document.createElement("span");
+    reward.className = "activity-reward";
+    reward.textContent = `+${entry.reward} EXP`;
+    row.append(day, detail, reward);
+    container.append(row);
+  }
 }
 
 function renderAll() {
